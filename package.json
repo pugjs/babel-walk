@@ -4,6 +4,9 @@
   "description": "Lightweight Babylon AST traversal",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "prepublish": "babel -d lib src"
   },
