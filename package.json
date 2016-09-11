@@ -1,6 +1,6 @@
 {
   "name": "babylon-walk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight Babylon AST traversal",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
