@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "scripts": {
     "prepublish": "babel -d lib src"
