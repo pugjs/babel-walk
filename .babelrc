@@ -1,8 +1,9 @@
 {
-  "presets": [
-    [ "es2015", { "loose": true } ]
-  ],
-  "plugins": [
-    "transform-runtime"
-  ]
+  "presets": [["@babel/preset-env", {
+    "targets": {
+      "node": "6"
+    },
+    "loose": true
+  }]],
+  "plugins": ["@babel/plugin-transform-runtime"]
 }

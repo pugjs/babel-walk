@@ -1,4 +1,4 @@
-import * as t from 'babel-types';
+import * as t from '@babel/types';
 import explode from './explode.js';
 
 export function simple(node, visitors, state) {
