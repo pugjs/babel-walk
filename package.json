@@ -28,6 +28,7 @@
   "devDependencies": {
     "@forbeslindesay/tsconfig": "^2.0.0",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "tslint": "^6.1.2",
     "typescript": "^3.9.3"
   }
