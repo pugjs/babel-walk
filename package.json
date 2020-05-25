@@ -1,34 +1,33 @@
 {
-  "name": "babylon-walk",
+  "name": "babel-walk",
   "version": "1.0.2",
-  "description": "Lightweight Babylon AST traversal",
+  "description": "Lightweight Babel AST traversal",
   "main": "lib/index.js",
-  "jsnext:main": "src/index.js",
   "files": [
-    "lib",
-    "src"
+    "lib"
   ],
   "scripts": {
-    "prepublish": "babel -d lib src"
+    "build": "tsc && node lib",
+    "postbuild": "rimraf lib/**/__tests__",
+    "lint": "tslint './src/**/*.{ts,tsx}' -t verbose -p .",
+    "prettier:write": "prettier --ignore-path .gitignore --write './**/*.{md,json,yaml,js,jsx,ts,tsx}'",
+    "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.{md,json,yaml,js,jsx,ts,tsx}'"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/babylon-walk.git"
+    "url": "https://github.com/pugjs/babel-walk.git"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 10.0.0"
   },
   "author": "Timothy Gu <timothygu99@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "@babel/types": "^7.0.0",
-    "lodash.clone": "^4.5.0"
+    "@babel/types": "^7.9.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0"
+    "@forbeslindesay/tsconfig": "^2.0.0",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3"
   }
 }
