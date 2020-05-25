@@ -28,16 +28,19 @@ export type SimpleFunction<TKey extends string, TState> = (
   node: NodeType<TKey>,
   state: TState,
 ) => void;
+
+export type SimpleVisitors<TState = void> = {
+  [key in keyof t.Aliases | t.Node['type']]?:
+    | SimpleFunction<key, TState>
+    | {
+        enter?: SimpleFunction<key, TState>;
+        exit?: SimpleFunction<key, TState>;
+      };
+};
+
 export function simple<TState>(
   node: t.Node,
-  visitors: {
-    [key in keyof t.Aliases | t.Node['type']]?:
-      | SimpleFunction<key, TState>
-      | {
-          enter?: SimpleFunction<key, TState>;
-          exit?: SimpleFunction<key, TState>;
-        };
-  },
+  visitors: SimpleVisitors<TState>,
   state: TState,
 ) {
   const vis = explode(visitors);
@@ -76,16 +79,19 @@ export type AncestorFunction<TKey extends string, TState> = (
   state: TState,
   ancestors: t.Node[],
 ) => void;
-export function ancestor<TState>(
+
+export type AncestorVisitor<TState = void> = {
+  [key in keyof t.Aliases | t.Node['type']]?:
+    | AncestorFunction<key, TState>
+    | {
+        enter?: AncestorFunction<key, TState>;
+        exit?: AncestorFunction<key, TState>;
+      };
+};
+
+export function ancestor<TState = void>(
   node: t.Node,
-  visitors: {
-    [key in keyof t.Aliases | t.Node['type']]?:
-      | AncestorFunction<key, TState>
-      | {
-          enter?: AncestorFunction<key, TState>;
-          exit?: AncestorFunction<key, TState>;
-        };
-  },
+  visitors: AncestorVisitor<TState>,
   state: TState,
 ) {
   const vis = explode(visitors);
@@ -126,15 +132,17 @@ export function ancestor<TState>(
   })(node);
 }
 
+export type RecursiveVisitors<TState = void> = {
+  [key in keyof t.Aliases | t.Node['type']]?: (
+    node: NodeType<key>,
+    state: TState,
+    recurse: (node: t.Node) => void,
+  ) => void;
+};
+
 export function recursive<TState>(
   node: t.Node,
-  visitors: {
-    [key in keyof t.Aliases | t.Node['type']]?: (
-      node: NodeType<key>,
-      state: TState,
-      recurse: (node: t.Node) => void,
-    ) => void;
-  },
+  visitors: RecursiveVisitors<TState>,
   state: TState,
 ) {
   const vis = explode(visitors);
