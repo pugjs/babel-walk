@@ -37,6 +37,11 @@
   resolved "https://registry.yarnpkg.com/@forbeslindesay/tsconfig/-/tsconfig-2.0.0.tgz#71a8a92afb366ea7ca05fe46e68bc033060c2e2d"
   integrity sha512-SqkFDsM1vgB5iXCjJKnnvYwIlQZhLfGjKQfmwp3PZjvqoDVbng76iQvppJAG1pX2nSmkPz8Z1rmEylXop/Ma8A==
 
+"@types/node@^14.0.5":
+  version "14.0.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
+  integrity sha512-90hiq6/VqtQgX8Sp0EzeIsv3r+ellbGj4URKj5j30tLlZvRUpnAe9YbYnjl3pJM93GyXU0tghHhvXHq+5rnCKA==
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"

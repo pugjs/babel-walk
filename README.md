@@ -28,27 +28,27 @@ $ npm install babel-walk
 var walk = require('babel-walk');
 ```
 
-### walk.simple(node, visitors, state)
+### walk.simple(visitors)(node, state)
 
 Do a simple walk over the AST. `node` should be the AST node to walk, and `visitors` an object containing Babel [visitors]. Each visitor function will be called as `(node, state)`, where `node` is the AST node, and `state` is the same `state` passed to `walk.simple`.
 
-When `walk.simple` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to [cache your visitors] and communicate state leveraging the `state` parameter. (One difference between the linked article and babel-walk is that the state is only accessible through the `state` variable, never as `this`.)
+When `walk.simple` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to cache the result of calling `walk.simple(visitors)` and communicate state leveraging the `state` parameter.
 
 All [babel-types] aliases (e.g. `Expression`) work, but the union syntax (e.g. `'Identifier|AssignmentPattern'(node, state) {}`) does not.
 
-### walk.ancestor(node, visitors, state)
+### walk.ancestor(visitors)(node, state)
 
 Do a simple walk over the AST, but memoizing the ancestors of the node and making them available to the visitors. `node` should be the AST node to walk, and `visitors` an object containing Babel [visitors]. Each visitor function will be called as `(node, state, ancestors)`, where `node` is the AST node, `state` is the same `state` passed to `walk.ancestor`, and `ancestors` is an array of ancestors to the node (with the outermost node being `[0]` and the current node being `[ancestors.length - 1]`). If `state` is not specified in the call to `walk.ancestor`, the `state` parameter will be set to `ancestors`.
 
-When `walk.ancestor` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to [cache your visitors] and communicate state leveraging the `state` parameter. (One difference between the linked article and babel-walk is that the state is only accessible through the `state` variable, never as `this`.)
+When `walk.ancestor` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to cache the result of calling `walk.ancestor(visitors)` and communicate state leveraging the `state` parameter.
 
 All [babel-types] aliases (e.g. `Expression`) work, but the union syntax (e.g. `'Identifier|AssignmentPattern'(node, state) {}`) does not.
 
-### walk.recursive(node, visitors, state)
+### walk.recursive(visitors)(node, state)
 
 Do a recursive walk over the AST, where the visitors are responsible for continuing the walk on the child nodes of their target node. `node` should be the AST node to walk, and `visitors` an object containing Babel [visitors]. Each visitor function will be called as `(node, state, c)`, where `node` is the AST node, `state` is the same `state` passed to `walk.recursive`, and `c` is a function that takes a single node as argument and continues walking _that_ node. If no visitor for a node is provided, the default walker algorithm will still be used.
 
-When `walk.recursive` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to [cache your visitors] and communicate state leveraging the `state` parameter. (One difference between the linked article and babel-walk is that the state is only accessible through the `state` variable, never as `this`.)
+When `walk.recursive` is called with a fresh set of visitors, it will first "explode" the visitors (e.g. expanding `Visitor(node, state) {}` to `Visitor() { enter(node, state) {} }`). This exploding process can take some time, so it is recommended to cache the result of calling `walk.recursive(visitors)` and communicate state leveraging the `state` parameter.
 
 Unlike other babel-walk walkers, `walk.recursive` does not call the `exit` visitor, only the `enter` (the default) visitor, of a specific node type.
 
@@ -61,7 +61,7 @@ import * as t from 'babel-types';
 import {parse} from 'babel';
 import * as walk from 'babel-walk';
 
-const visitors = {
+const visitors = walk.recursive({
   Statement(node, state, c) {
     if (t.isVariableDeclaration(node)) {
       for (let declarator of node.declarations) {
@@ -78,13 +78,13 @@ const visitors = {
       state.counter++;
     }
   },
-};
+});
 
 function countFunctions(node) {
   const state = {
     counter: 0,
   };
-  walk.recursive(node, visitors, state);
+  visitors(node, state);
   return state.counter;
 }
 
