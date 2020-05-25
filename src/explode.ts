@@ -39,9 +39,6 @@ if (
  * 3. make the enter and exit handlers arrays, so that multiple handlers can be merged
  */
 export default function explode(input: any): any {
-  if (input._babel_walk_exploded) {
-    return input._babel_walk_exploded;
-  }
   const results: any = {};
   for (const key in input) {
     const aliases = FLIPPED_ALIAS_KEYS[key];
@@ -93,6 +90,5 @@ export default function explode(input: any): any {
       }
     }
   }
-  input._babel_walk_exploded = results;
   return results;
 }
