@@ -1,0 +1,24 @@
+name: Publish Canary
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install --frozen-lockfile
+      - run: yarn prettier:check
+      - run: yarn build
+      - run: node lib
+      - run: npx rollingversions publish --canary $GITHUB_RUN_NUMBER
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
