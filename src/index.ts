@@ -1,6 +1,25 @@
 import * as t from '@babel/types';
 import explode from './explode';
 
+const VISITOR_KEYS: {[key: string]: string[]} = (t as any).VISITOR_KEYS;
+if (
+  !(
+    VISITOR_KEYS &&
+    // tslint:disable-next-line: strict-type-predicates
+    typeof VISITOR_KEYS === 'object' &&
+    Object.keys(VISITOR_KEYS).every(
+      (key) =>
+        Array.isArray(VISITOR_KEYS[key]) &&
+        // tslint:disable-next-line: strict-type-predicates
+        VISITOR_KEYS[key].every((v) => typeof v === 'string'),
+    )
+  )
+) {
+  throw new Error(
+    '@babel/types VISITOR_KEYS does not match the expected type.',
+  );
+}
+
 export type NodeType<type extends string> = type extends keyof t.Aliases
   ? t.Aliases[type]
   : Extract<t.Node, {type: type}>;
@@ -33,7 +52,7 @@ export function simple<TState>(
       }
     }
 
-    for (const key of (t as any).VISITOR_KEYS[node.type] || []) {
+    for (const key of VISITOR_KEYS[node.type] || []) {
       const subNode = (node as any)[key];
       if (Array.isArray(subNode)) {
         for (const subSubNode of subNode) {
@@ -86,7 +105,7 @@ export function ancestor<TState>(
       }
     }
 
-    for (const key of (t as any).VISITOR_KEYS[node.type] || []) {
+    for (const key of VISITOR_KEYS[node.type] || []) {
       const subNode = (node as any)[key];
       if (Array.isArray(subNode)) {
         for (const subSubNode of subNode) {
@@ -128,7 +147,7 @@ export function recursive<TState>(
         v(node, state, recurse);
       }
     } else {
-      for (const key of (t as any).VISITOR_KEYS[node.type] || []) {
+      for (const key of VISITOR_KEYS[node.type] || []) {
         const subNode = (node as any)[key];
         if (Array.isArray(subNode)) {
           for (const subSubNode of subNode) {

@@ -11,7 +11,7 @@ In my tests, babel-walk's ancestor walker (the most complex walker provided by t
 [![Dependency Status](https://img.shields.io/david/pugjs/babel-walk.svg)](https://david-dm.org/pugjs/babel-walk)
 [![NPM version](https://img.shields.io/npm/v/babel-walk.svg)](https://www.npmjs.com/package/babel-walk)
 
-[Babel]: https://babeljs.io/
+[babel]: https://babeljs.io/
 [babel-traverse]: https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-babel-traverse
 [walk module]: https://github.com/ternjs/acorn#distwalkjs
 
@@ -76,12 +76,12 @@ const visitors = {
     if (t.isFunction(node.init)) {
       state.counter++;
     }
-  }
+  },
 };
 
 function countFunctions(node) {
   const state = {
-    counter: 0
+    counter: 0,
   };
   walk.recursive(node, visitors, state);
   return state.counter;
@@ -123,4 +123,4 @@ For those of you migrating from Acorn to Babel, there are a few things to be awa
 
 ## License
 
-  MIT
+MIT

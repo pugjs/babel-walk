@@ -1,8 +1,35 @@
 import * as t from '@babel/types';
 
+if (
+  !(
+    Array.isArray((t as any).TYPES) &&
+    (t as any).TYPES.every((t: any) => typeof t === 'string')
+  )
+) {
+  throw new Error('@babel/types TYPES does not match the expected type.');
+}
+
 const FLIPPED_ALIAS_KEYS: {[key: string]: string[]} = (t as any)
   .FLIPPED_ALIAS_KEYS;
 const TYPES = new Set<string>((t as any).TYPES);
+
+if (
+  !(
+    FLIPPED_ALIAS_KEYS &&
+    // tslint:disable-next-line: strict-type-predicates
+    typeof FLIPPED_ALIAS_KEYS === 'object' &&
+    Object.keys(FLIPPED_ALIAS_KEYS).every(
+      (key) =>
+        Array.isArray(FLIPPED_ALIAS_KEYS[key]) &&
+        // tslint:disable-next-line: strict-type-predicates
+        FLIPPED_ALIAS_KEYS[key].every((v) => typeof v === 'string'),
+    )
+  )
+) {
+  throw new Error(
+    '@babel/types FLIPPED_ALIAS_KEYS does not match the expected type.',
+  );
+}
 
 /**
  * This serves thre functions:
