@@ -8,7 +8,7 @@ This module loosely implements the API of Acorn parser's [walk module], which is
 
 In my tests, babel-walk's ancestor walker (the most complex walker provided by this module) is about 8 times faster than babel-traverse, if the visitors are cached and the same AST is used for all runs. It is about 16 times faster if a fresh AST is used every run.
 
-[![Build Status](https://img.shields.io/github/workflow/status/pugjs/babel-walk/Publish%20Canary/master?style=for-the-badge)](https://github.com/pugjs/babel-walk/actions?query=workflow%3A%22Publish+Canary%22)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/pugjs/babel-walk/rollingversions-canary.yml?branch=master&style=for-the-badge)](https://github.com/pugjs/babel-walk/actions?query=workflow%3A%22Publish+Canary%22)
 [![Rolling Versions](https://img.shields.io/badge/Rolling%20Versions-Enabled-brightgreen?style=for-the-badge)](https://rollingversions.com/pugjs/babel-walk)
 [![NPM version](https://img.shields.io/npm/v/babel-walk?style=for-the-badge)](https://www.npmjs.com/package/babel-walk)
 
